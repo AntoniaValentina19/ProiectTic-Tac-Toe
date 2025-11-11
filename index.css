@@ -1,0 +1,191 @@
+/* === Culori de Bază (Roșu și Galben) === */
+:root {
+    --color-bg: #fdf5e6; /* Fundal foarte deschis, ușor gălbui */
+    --color-primary: #C0392B; /* Roșu închis (pentru titlu/status) */
+    --color-x: #E74C3C; /* Roșu intens pentru X */
+    --color-o: #F1C40F; /* Galben Auriu pentru O */
+    --color-winning: #FFD700; /* Auriu pentru winning square */
+    --color-text-dark: #2c3e50;
+    --color-button-bg: #2ecc71; /* Verde/Mint pentru butonul de reset (pentru contrast) */
+    --color-square-border: #e67e22; /* Portocaliu pentru bordură */
+}
+
+/* === CENTRAREA JOCULUI === */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text-dark);
+    margin: 0;
+    padding: 20px;
+    /* Proprietăți pentru centrare */
+    display: flex; 
+    justify-content: center; /* Orizontal */
+    align-items: center; /* Vertical */
+    min-height: 100vh;
+}
+
+h1 {
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 2.5rem;
+}
+
+.game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Umbră mai pronunțată */
+}
+
+.game-board {
+    margin-bottom: 20px;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.board-row {
+    display: flex;
+}
+
+/* === Statusul Jocului (Câștigător/Mutare) === */
+.status {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-align: center;
+    color: var(--color-text-dark);
+    background-color: #fce8e7; /* Fundal Roșu deschis */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 50px;
+}
+
+/* Stări de joc */
+.status-x-winner {
+    background-color: #fce8e7; 
+    color: var(--color-x);
+}
+
+.status-o-winner {
+    background-color: #fef9e7; 
+    color: var(--color-o);
+}
+
+.status-x-next {
+    color: var(--color-x);
+    border-bottom: 3px solid var(--color-x);
+}
+
+.status-o-next {
+    color: var(--color-o);
+    border-bottom: 3px solid var(--color-o);
+}
+
+/* ANIMAȚIE: Pulsație pentru mesajul câștigător */
+.status-winner-animate {
+    animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 5px rgba(255, 100, 0, 0.5); }
+    100% { transform: scale(1.03); box-shadow: 0 0 18px rgba(255, 100, 0, 0.9); } 
+}
+
+/* === BUTON Începe Joc Nou === */
+.reset-button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    background-color: var(--color-button-bg);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.reset-button:hover {
+    background-color: #27ae60;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+
+/* === Casuțele de Joc (Square) === */
+.square {
+    background: #ffffff;
+    border: 3px solid var(--color-square-border);
+    float: left;
+    font-size: 5rem;
+    font-weight: bold;
+    line-height: 1;
+    height: 110px; /* Mărime mai mare */
+    width: 110px; /* Mărime mai mare */
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.square:hover {
+    background-color: #fff9e6; /* Fundal ușor gălbui la hover */
+    transform: scale(1.05); 
+    box-shadow: 0 6px 15px rgba(255, 100, 0, 0.3); /* Umbră roșie/portocalie */
+}
+
+/* Evidențierea Casuțelor Câștigătoare */
+.winning-square {
+    background-color: var(--color-winning) !important;
+    border-color: #ff8c00; 
+    animation: flashWin 0.4s ease-in-out 3;
+}
+
+@keyframes flashWin {
+    0% { opacity: 0.8; }
+    100% { opacity: 1; }
+}
+
+/* === Conținutul Casuțelor (X și O) === */
+.square-content {
+    /* ANIMAȚIE: Pop-in la apariție */
+    animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+    display: inline-block;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.content-x {
+    color: var(--color-x);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.content-o {
+    color: var(--color-o);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Eliminarea bordurilor duble */
+.board-row:first-child .square { border-top: 0; }
+.board-row:last-child .square { border-bottom: 0; }
+.board-row .square:first-child { border-left: 0; }
+.board-row .square:last-child { border-right: 0; }
